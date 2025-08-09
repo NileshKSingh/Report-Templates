@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Evidence Report</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{padding:24px;max-width:1400px;margin:0 auto;color:#111;background:#fafafa}
+    .topbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    #toggleAll{background:#0b74de;color:white;border:none;padding:10px 14px;border-radius:8px;font-size:18px;cursor:pointer}
+    #toggleAll[aria-pressed="true"]{background:#e03b3b}
+    .hint{font-size:14px;color:#444}
+    details.accordion{border:1px solid #e3e6ea;border-radius:8px;padding:8px 12px;margin:10px 0;background:#fff}
+    summary{list-style:none;cursor:pointer;outline:none;font-weight:600;padding:8px}
+    summary::-webkit-details-marker{display:none}
+    .summary-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .chev{font-weight:700;font-size:18px;transform:rotate(0deg);transition:transform .18s ease}
+    details[open] .chev{transform:rotate(45deg)}
+    .content{padding:6px 8px 14px 8px;color:#222;line-height:1.45}
+    pre.json-view{
+      background:#1e1e1e;border-radius:6px;padding:12px;overflow:auto;
+      font-family:monospace;font-size:14px;color:#d4d4d4;white-space:pre-wrap;word-break:break-word;
+    }
+    .json-key    { color:#9cdcfe; }
+    .json-string { color:#ce9178; }
+    .json-number { color:#b5cea8; }
+    .json-boolean{ color:#569cd6; }
+    .json-null   { color:#dcdcaa; }
+
+    /* Table styles */
+    table.data-table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+      background:#fff;
+    }
+    table.data-table th, table.data-table td {
+      padding:8px 12px;
+      border:1px solid #ddd;
+      text-align:left;
+    }
+    table.data-table th {
+      background:#f4f4f4;
+      font-weight:600;
+    }
+    table.data-table tr:nth-child(even) td {
+      background:#fafafa;
+    }
+  </style>
+</head>
+<body>
+ <div><h2><u>Process - Evidence Report</u></h2></div><br>
+<div class="topbar">
+
+  <button id="toggleAll" aria-pressed="false" title="Expand / Collapse all">+</button>
+  <div>
+    <div style="font-weight:700">All Evidences</div>
+    <div class="hint">Click the <strong>+ / −</strong> button to expand or collapse every evidences.</div>
+  </div>
+</div>
+
+<details class="accordion">
+  <summary>
+    <div class="summary-row">
+      <span>Accordion 1 — Introduction</span>
+      <span class="chev">+</span>
+    </div>
+  </summary>
+  <div class="content">
+    This is the content for accordion 1.
+  </div>
+</details>
+
+<details class="accordion" id="jsonAccordion">
+  <summary>
+    <div class="summary-row">
+      <span>Accordion 2 — JSON Data (Highlighted)</span>
+      <span class="chev">+</span>
+    </div>
+  </summary>
+  <div class="content">
+    <pre id="jsonOutput" class="json-view"></pre>
+    <script type="application/json" id="inlineJson">
+      {
+        "name": "Test Object",
+        "version": 1,
+        "tags": ["alpha", "beta", "release"],
+        "details": {
+          "active": true,
+          "count": 42,
+          "nested": { "hello": "world" }
+        }
+      }
+    </script>
+  </div>
+</details>
+
+<details class="accordion">
+  <summary>
+    <div class="summary-row">
+      <span>Accordion 3 — More info</span>
+      <span class="chev">+</span>
+    </div>
+  </summary>
+  <div class="content">
+    More content for the third accordion.
+  </div>
+</details>
+
+<details class="accordion">
+  <summary>
+    <div class="summary-row">
+      <span>Client Facing - Owners & Key roles</span>
+      <span class="chev">+</span>
+    </div>
+  </summary>
+  <div class="content">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Country</th>
+          <th>Roles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>101</td>
+          <td>2025-08-09</td>
+          <td>Alice Johnson</td>
+          <td>alice@example.com</td>
+          <td>USA</td>
+          <td>Admin, Editor</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>2025-07-28</td>
+          <td>Rajesh Kumar</td>
+          <td>rajesh@example.com</td>
+          <td>India</td>
+          <td>User</td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>2025-06-15</td>
+          <td>Maria Garcia</td>
+          <td>maria@example.com</td>
+          <td>Spain</td>
+          <td>Viewer</td>
+        </tr>
+        <tr>
+          <td>104</td>
+          <td>2025-05-02</td>
+          <td>John Smith</td>
+          <td>john@example.com</td>
+          <td>UK</td>
+          <td>Editor</td>
+        </tr>
+        <tr>
+          <td>105</td>
+          <td>2025-04-18</td>
+          <td>Chen Wei</td>
+          <td>chen@example.com</td>
+          <td>China</td>
+          <td>Admin</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</details>
+
+<script>
+  const btn = document.getElementById('toggleAll');
+  const accordions = Array.from(document.querySelectorAll('details.accordion'));
+
+  function areAllOpen(){ return accordions.length && accordions.every(d => d.open); }
+  function updateButton(){
+    const allOpen = areAllOpen();
+    btn.textContent = allOpen ? '−' : '+';
+    btn.setAttribute('aria-pressed', String(allOpen));
+    btn.title = allOpen ? 'Collapse all' : 'Expand all';
+  }
+  btn.addEventListener('click', () => {
+    const nextState = !areAllOpen();
+    accordions.forEach(d => d.open = nextState);
+    updateButton();
+  });
+  accordions.forEach(d => d.addEventListener('toggle', updateButton));
+
+  function syntaxHighlight(json) {
+    if (typeof json != 'string') json = JSON.stringify(json, null, 2);
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/(\"(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\\"])*\"\\s*:)|(\"(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\\"])*\")|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?/g, match => {
+      if (/^\".*\"\\s*:/.test(match)) return '<span class="json-key">' + match + '</span>';
+      else if (/^\".*\"$/.test(match)) return '<span class="json-string">' + match + '</span>';
+      else if (/true|false/.test(match)) return '<span class="json-boolean">' + match + '</span>';
+      else if (/null/.test(match)) return '<span class="json-null">' + match + '</span>';
+      else return '<span class="json-number">' + match + '</span>';
+    });
+  }
+
+  const jsonAccordion = document.getElementById('jsonAccordion');
+  const jsonOutput = document.getElementById('jsonOutput');
+  jsonAccordion.addEventListener('toggle', () => {
+    if (jsonAccordion.open && !jsonOutput.innerHTML.trim()) {
+      const rawJson = document.getElementById('inlineJson').textContent;
+      try {
+        const parsed = JSON.parse(rawJson);
+        jsonOutput.innerHTML = syntaxHighlight(parsed);
+      } catch(e) {
+        jsonOutput.textContent = "Invalid JSON";
+      }
+    }
+  });
+
+  updateButton();
+</script>
+
+</body>
+</html>
